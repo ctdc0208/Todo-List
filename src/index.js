@@ -1,11 +1,9 @@
 import './style.css';
 
- function component() {
-   const element = document.createElement('div');
+// get html element id="content"
+const content = document.getElementById('content');
 
-   element.classList.add('hello');
-
-   return element;
- }
-
- document.body.appendChild(component());
+const background = document.createElement('div');
+background.classList.add('background');
+background.textContent = 'Hello',
+content.appendChild(background);
