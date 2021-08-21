@@ -1,7 +1,9 @@
-.background {
-  background-color: red;
+html, body {
+  height: 100%;
+  margin: 0;
+  color: black;
 }
 
 #content {
-  background-color: red;
+  height: 100%; 
 }
