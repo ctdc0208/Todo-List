@@ -24,7 +24,11 @@ a1Close.textContent = "X";
 a1.appendChild(a1Close);
 dropdownSideMenu.appendChild(a1);
 const a2 = document.createElement('a');
+<<<<<<< HEAD
 a2.textContent = "Home";
+=======
+a2.textContent = "Inbox";
+>>>>>>> 149227f1cdfea7c5ad9120c80d7c7c41d18765c3
 dropdownSideMenu.appendChild(a2);
 const a3 = document.createElement('a');
 a3.textContent = "Today";
