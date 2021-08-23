@@ -24,11 +24,7 @@ a1Close.textContent = "X";
 a1.appendChild(a1Close);
 dropdownSideMenu.appendChild(a1);
 const a2 = document.createElement('a');
-<<<<<<< HEAD
 a2.textContent = "Home";
-=======
-a2.textContent = "Inbox";
->>>>>>> 149227f1cdfea7c5ad9120c80d7c7c41d18765c3
 dropdownSideMenu.appendChild(a2);
 const a3 = document.createElement('a');
 a3.textContent = "Today";
@@ -50,13 +46,13 @@ mainContent.textContent = "...";
 mainContainer.appendChild(mainContent);
 
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
-function openNav() {
+const openNav = () => {
   document.getElementById("myDropdown").style.width = "250px";
   document.getElementById("main").style.marginLeft = "250px";
 }
 
 /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
-function closeNav() {
+const closeNav() = () => {
   document.getElementById("myDropdown").style.width = "0";
   document.getElementById("main").style.marginLeft = "0";
 }
