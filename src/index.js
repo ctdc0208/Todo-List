@@ -3,6 +3,18 @@ import './style.css';
 // get html element id="content"
 const content = document.getElementById('content');
 
+// add links of css icons
+const linkOne = document.createElement('link');
+  linkOne.setAttribute('rel', "stylesheet");
+  linkOne.setAttribute('href', "https://www.w3schools.com/w3css/4/w3.css");
+content.appendChild(linkOne);
+
+const linkTwo = document.createElement('link');
+  linkTwo.setAttribute('rel', "stylesheet");
+  linkTwo.setAttribute('href', "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+content.appendChild(linkTwo);
+
+
 window.openNav = openNav; // get openNav
 window.closeNav = closeNav; // get closeNav
 
@@ -22,10 +34,10 @@ const makeSidebar = (() => {
     a1Title.classList.add('title-sidebar');
     a1Title.textContent = "Todo-List";
   a1.appendChild(a1Title);
-  const a1Close = document.createElement('div');
+  const a1Close = document.createElement('span');
     a1Close.classList.add("close-btn-sidebar");
     a1Close.setAttribute('onclick', "closeNav()");
-    a1Close.textContent = "&times;";
+    a1Close.textContent = "X";
   a1.appendChild(a1Close);
   dropdownSideMenu.appendChild(a1);
 
