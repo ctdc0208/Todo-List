@@ -4,11 +4,9 @@ module.exports = {
    mode: 'development',
     entry: {
       index: './src/index.js',
-      ui: './src/UI.js',
-      add: './src/addPage.js',
     },
   output: {
-    filename: '[name].bundle.js',
+    filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
   devtool: 'inline-source-map',
