@@ -1,5 +1,24 @@
 import './style.css';
 
+// add tab browsing
+const openTab = (evt, tabName) => {
+  var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+};
+
 
 // get html element id="content"
 const content = document.getElementById('content');
@@ -27,7 +46,7 @@ const makeSidebar = (() => {
 
   const dropdownSideMenu = document.createElement('div');
     dropdownSideMenu.setAttribute('id', "myDropdown");
-  dropdownSideMenu.classList.add('dropdown-side-menu');
+  dropdownSideMenu.classList.add('dropdownSideMenu');
 
   const a1 = document.createElement('div');
     a1.classList.add('a1');
@@ -46,21 +65,26 @@ const makeSidebar = (() => {
     a2.textContent = "Home";
     a2.classList.add('tablinks');
     a2.addEventListener('click', function(){openTab(event, 'Home')});
+    a2.setAttribute('id', 'defaultOpen');
   dropdownSideMenu.appendChild(a2);
 
   const a3 = document.createElement('button');
     a3.textContent = "Today";
+    a3.classList.add('tablinks');
+    a3.addEventListener('click', function(){openTab(event, 'Today')});
   dropdownSideMenu.appendChild(a3);
 
   const a4 = document.createElement('button');
     a4.textContent = "This Week";
+    a4.classList.add('tablinks');
+    a4.addEventListener('click', function(){openTab(event, 'Week')});
   dropdownSideMenu.appendChild(a4);
 
   mainContainer.appendChild(dropdownSideMenu);
 
   const span = document.createElement('span');
     span.setAttribute('onclick', "openNav()");
-    span.setAttribute('id', 'defaultOpen');
+    span.setAttribute('id', 'defaultOpenHome');
     span.textContent = "Open";
   mainContainer.appendChild(span);
 
@@ -77,7 +101,6 @@ const makeSidebar = (() => {
 
   const mainContent = document.createElement('div');
     mainContent.setAttribute('id', "main");
-    mainContent.textContent = "...";
   mainContainer.appendChild(mainContent);
 })();
 
@@ -92,6 +115,23 @@ const mainContents = (() => {
       homeP.textContent = "Home";
       home.appendChild(homeP);
   mainContent.appendChild(home);
+
+  const today = document.createElement('div');
+    today.classList.add('tabcontent');
+    today.setAttribute('id', 'Today');
+      const todayP = document.createElement('p');
+      todayP.textContent = "Today";
+      today.appendChild(todayP);
+  mainContent.appendChild(today);
+
+  const week = document.createElement('div');
+    week.classList.add('tabcontent');
+    week.setAttribute('id', 'Week');
+      const weekP = document.createElement('p');
+      weekP.textContent = "Week";
+      week.appendChild(weekP);
+  mainContent.appendChild(week);
+
 })();
 
 
@@ -108,8 +148,6 @@ function closeNav() {
   document.getElementById("main").style.marginLeft = "0";
 }
 
-// automatic defaultOpen the sidebar
-document.getElementById("defaultOpen").click();
 
 // set myPages array
 let myPages = [];
@@ -120,19 +158,6 @@ class pages {
     this.page = page;
   }
 }
-
-// add tab browsing
-const openTab = (evt, tabName) => {
-  var i, tabcontent, tablinks;
-
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
-};
 
 // set arrays in element to display pages
 const displayPages = (() => {
@@ -174,3 +199,7 @@ addPageToArray("Quick Note");
 addPageToArray("Reading List");
 addPageToArray("Habit Tracker");
 addPageToArray("Personal Home");
+
+// automatic defaultOpen the sidebar
+document.getElementById("defaultOpen").click();
+document.getElementById("defaultOpenHome").click();

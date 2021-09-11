@@ -15,7 +15,8 @@ button:hover {
 }
 
 /* The side navigation menu */
-.dropdown-side-menu {
+.dropdownSideMenu {
+   overflow: hidden;
    height: 100%; /* 100% Full-height */
    width: 0; /* 0 width - change this with JavaScript */
    position: fixed; /* Stay in place */
@@ -25,10 +26,11 @@ button:hover {
    background-color: rgb(247, 246, 243);
    overflow-x: hidden; /* Disable horizontal scroll */
    padding-top: 10px; /* Place content 60px from the top */
+
 }
 
 /* The navigation menu links */
-.dropdown-side-menu button {
+.dropdownSideMenu button {
    display: flex;
    justify-content: flex-start;
    padding: 5px 10px 10px 15px;
@@ -45,12 +47,12 @@ button:hover {
 }
 
 /* When you mouse over the navigation links, change their color */
-.dropdown-side-menu button:hover {
+.dropdownSideMenu button:hover {
    background-color: rgb(210, 210, 210);
 }
 
 /* Position and style the close button (top right corner) */
-.dropdown-side-menu .closebtn {
+.dropdownSideMenu .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
@@ -64,10 +66,10 @@ button:hover {
   padding: 20px;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the dropdown-side-menu (less padding and a smaller font size) */
+/* On smaller screens, where height is less than 450px, change the style of the dropdownSideMenu (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .dropdown-side-menu {padding-top: 15px;};
-  .dropdown-side-menu a {font-size: 18px;};
+  .dropdownSideMenu {padding-top: 15px;};
+  .dropdownSideMenu a {font-size: 18px;};
 }
 
 .a1 {
@@ -103,32 +105,6 @@ button:hover {
 
 .page-column {
 
-}
-
-/* Style the tab */
-.tab {
- overflow: hidden;
-}
-
-/* Style the buttons that are used to open the tab content */
-.tab button {
- background-color: inherit;
- float: left;
- border: none;
- outline: none;
- cursor: pointer;
- padding: 14px 16px;
- transition: 0.3s;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
- background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
- background-color: #ccc;
 }
 
 /* Style the tab content */
