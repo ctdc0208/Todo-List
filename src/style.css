@@ -63,7 +63,9 @@ button:hover {
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
   transition: margin-left .5s;
-  padding: 20px;
+  padding-top: 0px;
+  padding-left: 50px;
+  padding-right: 20px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the dropdownSideMenu (less padding and a smaller font size) */
@@ -105,6 +107,10 @@ button:hover {
 
 .page-column {
 
+}
+
+.page-tab-title {
+  font-size: 50px;
 }
 
 /* Style the tab content */

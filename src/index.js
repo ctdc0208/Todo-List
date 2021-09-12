@@ -112,24 +112,48 @@ const mainContents = (() => {
     home.classList.add('tabcontent');
     home.setAttribute('id', 'Home');
       const homeP = document.createElement('p');
-      homeP.textContent = "Home";
+        homeP.classList.add('page-tab-title');
+        homeP.textContent = "Home";
       home.appendChild(homeP);
+
+      const addList = document.createElement('button');
+          addList.classList.add('add-list');
+          addList.textContent = 'Add';
+          addList.setAttribute('id', 'addList');
+      home.appendChild(addList);
+
   mainContent.appendChild(home);
 
   const today = document.createElement('div');
     today.classList.add('tabcontent');
     today.setAttribute('id', 'Today');
       const todayP = document.createElement('p');
-      todayP.textContent = "Today";
+        todayP.classList.add('page-tab-title');
+        todayP.textContent = "Today";
       today.appendChild(todayP);
+
+      const addListToday = document.createElement('button');
+          addListToday.classList.add('add-list');
+          addListToday.textContent = 'Add';
+          addListToday.setAttribute('id', 'addList');
+      today.appendChild(addListToday);
+
   mainContent.appendChild(today);
 
   const week = document.createElement('div');
     week.classList.add('tabcontent');
     week.setAttribute('id', 'Week');
       const weekP = document.createElement('p');
-      weekP.textContent = "Week";
+        weekP.classList.add('page-tab-title');
+        weekP.textContent = "Week";
       week.appendChild(weekP);
+
+      const addListWeek = document.createElement('button');
+          addListWeek.classList.add('add-list');
+          addListWeek.textContent = 'Add';
+          addListWeek.setAttribute('id', 'addList');
+      week.appendChild(addListWeek);
+
   mainContent.appendChild(week);
 
 })();
@@ -161,26 +185,32 @@ class pages {
 
 // set arrays in element to display pages
 const displayPages = (() => {
-  const pageList = document.querySelector('#table-body');
-  pageList.textContent = '';
-  for (let i = 0; i < myPages.length; i += 1) {
-    const pageColumn = document.createElement('button');
-      pageColumn.classList.add('page-column');
-      pageColumn.classList.add('tablinks');
-      pageColumn.addEventListener('click', function(){openTab(event, myPages[i].page)});
-      pageColumn.textContent = myPages[i].page;
-    pageList.appendChild(pageColumn);
+  const mainContent = document.querySelector('#main');
+    const pageList = document.querySelector('#table-body');
+    pageList.textContent = '';
+    for (let i = 0; i < myPages.length; i += 1) {
+      const pageColumn = document.createElement('button');
+        pageColumn.classList.add('page-column');
+        pageColumn.classList.add('tablinks');
+        pageColumn.addEventListener('click', function(){openTab(event, myPages[i].page)});
+        pageColumn.textContent = myPages[i].page;
+      pageList.appendChild(pageColumn);
 
-    const mainContent = document.querySelector('#main');
+      const pageTab = document.createElement('div');
+        pageTab.classList.add('tabcontent');
+        pageTab.setAttribute('id', myPages[i].page);
+          const pageTabTitle = document.createElement('p');
+            pageTabTitle.classList.add('page-tab-title');
+            pageTabTitle.textContent = myPages[i].page;
+          pageTab.appendChild(pageTabTitle);
 
-    const pageTab = document.createElement('div');
-      pageTab.classList.add('tabcontent');
-      pageTab.setAttribute('id', myPages[i].page);
-        const pageTabTitle = document.createElement('p');
-        pageTabTitle.textContent = myPages[i].page;
-        pageTab.appendChild(pageTabTitle);
-    mainContent.appendChild(pageTab);
-  }
+          const addList = document.createElement('button');
+              addList.classList.add('add-list');
+              addList.textContent = 'Add';
+              addList.setAttribute('id', 'addList');
+          pageTab.appendChild(addList);
+      mainContent.appendChild(pageTab);
+    }
 });
 
 // make a add page function
