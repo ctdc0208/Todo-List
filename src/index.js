@@ -165,9 +165,21 @@ const displayPages = (() => {
   pageList.textContent = '';
   for (let i = 0; i < myPages.length; i += 1) {
     const pageColumn = document.createElement('button');
-    pageColumn.classList.add('page-column');
-    pageColumn.textContent = myPages[i].page;
+      pageColumn.classList.add('page-column');
+      pageColumn.classList.add('tablinks');
+      pageColumn.addEventListener('click', function(){openTab(event, myPages[i].page)});
+      pageColumn.textContent = myPages[i].page;
     pageList.appendChild(pageColumn);
+
+    const mainContent = document.querySelector('#main');
+
+    const pageTab = document.createElement('div');
+      pageTab.classList.add('tabcontent');
+      pageTab.setAttribute('id', myPages[i].page);
+        const pageTabTitle = document.createElement('p');
+        pageTabTitle.textContent = myPages[i].page;
+        pageTab.appendChild(pageTabTitle);
+    mainContent.appendChild(pageTab);
   }
 });
 
