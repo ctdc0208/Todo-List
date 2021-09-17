@@ -19,7 +19,6 @@ const openTab = (evt, tabName) => {
   evt.currentTarget.className += " active";
 };
 
-
 // get html element id="content"
 const content = document.getElementById('content');
 
@@ -212,6 +211,46 @@ const displayPages = (() => {
       mainContent.appendChild(pageTab);
     }
 });
+
+const generateTask = (taskDescription, dueDate, doneStatus) => {
+  const taskContainer = document.createElement('div');
+    taskContainer.classList.add('task-container');
+
+  const taskDescriptionElement = document.createElement('div');
+    taskDescriptionElement.classList.add('task-description');
+
+  const dueDateElement = document.createElement('div');
+    dueDateElement.classList.add('task-due-date');
+
+  const addTask = document.createElement('div');
+    addTask.textContent = "+";
+
+  const taskProperties = document.createElement('div');
+    taskProperties.textContent = "#";
+
+  taskContainer.appendChild(addTask);
+  taskContainer.appendChild(taskProperties);
+  taskContainer.appendChild(dueDate);
+}
+
+const appendTask = (task) => {
+  const container = document.querySelector('.task-container');
+    container.appendChild(task);
+}
+
+const generateArray = (array) => {
+for (let i = 0; i < array.length; i++) {
+    if (array[i].description != "") {
+      let task = generateTask(
+        array[i].description,
+        array[i].dueDate,
+        array[i].completion
+      ).userTask;
+      task.setAttribute("id", `${i}`);
+      appendTask(task);
+    }
+  }
+};
 
 // make a add page function
 const addPageToArray = (page) => {
