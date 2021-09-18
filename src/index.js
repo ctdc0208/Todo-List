@@ -174,6 +174,7 @@ function closeNav() {
 
 // set myPages array
 let myPages = [];
+let myTask = [];
 
 // add class page
 class pages {
@@ -206,51 +207,16 @@ const displayPages = (() => {
           const addList = document.createElement('button');
               addList.classList.add('add-list');
               addList.textContent = 'Add';
-              addList.setAttribute('id', 'addList');
+              addList.setAttribute('id', 'addTask');
           pageTab.appendChild(addList);
+
+          const taskContainer = document.createElement('div');
+            taskContainer.classList.add('task-container');
+          pageTab.appendChild(taskContainer)
+
       mainContent.appendChild(pageTab);
     }
 });
-
-const generateTask = (taskDescription, dueDate, doneStatus) => {
-  const taskContainer = document.createElement('div');
-    taskContainer.classList.add('task-container');
-
-  const taskDescriptionElement = document.createElement('div');
-    taskDescriptionElement.classList.add('task-description');
-
-  const dueDateElement = document.createElement('div');
-    dueDateElement.classList.add('task-due-date');
-
-  const addTask = document.createElement('div');
-    addTask.textContent = "+";
-
-  const taskProperties = document.createElement('div');
-    taskProperties.textContent = "#";
-
-  taskContainer.appendChild(addTask);
-  taskContainer.appendChild(taskProperties);
-  taskContainer.appendChild(dueDate);
-}
-
-const appendTask = (task) => {
-  const container = document.querySelector('.task-container');
-    container.appendChild(task);
-}
-
-const generateArray = (array) => {
-for (let i = 0; i < array.length; i++) {
-    if (array[i].description != "") {
-      let task = generateTask(
-        array[i].description,
-        array[i].dueDate,
-        array[i].completion
-      ).userTask;
-      task.setAttribute("id", `${i}`);
-      appendTask(task);
-    }
-  }
-};
 
 // make a add page function
 const addPageToArray = (page) => {
@@ -271,9 +237,34 @@ const listenClicksPages = (() => {
     const { target } = event;
     if (target.id === 'addPage') {
       createPage(event);
+    } else if (target.id === 'addTask') {
+      createTask(event);
     }
   });
 })();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 addPageToArray("Quick Note");
