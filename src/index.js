@@ -176,80 +176,6 @@ function closeNav() {
 }
 
 
-const pagesss = () => {
-  // set myPages array
-  let myPages = [];
-
-  // add class page
-  class pages {
-    constructor (page) {
-      this.page = page;
-    }
-  }
-
-  // set arrays in element to display pages
-  const displayPages = (() => {
-    const mainContent = document.querySelector('#main');
-      const pageList = document.querySelector('#table-body');
-      pageList.textContent = '';
-      for (let i = 0; i < myPages.length; i += 1) {
-        const pageColumn = document.createElement('li');
-          pageColumn.classList.add('page-column');
-          pageColumn.classList.add('tablinks');
-          pageColumn.addEventListener('click', function(){openTab(event, myPages[i].page)});
-          pageColumn.textContent = myPages[i].page;
-        pageList.appendChild(pageColumn);
-
-        const pageTab = document.createElement('div');
-          pageTab.classList.add('tabcontent');
-          pageTab.setAttribute('id', myPages[i].page);
-            const pageTabTitle = document.createElement('p');
-              pageTabTitle.classList.add('page-tab-title');
-              pageTabTitle.textContent = myPages[i].page;
-            pageTab.appendChild(pageTabTitle);
-
-            const addList = document.createElement('button');
-                addList.classList.add('add-list');
-                addList.textContent = 'Add';
-                addList.setAttribute('id', 'addTask');
-            pageTab.appendChild(addList);
-
-            const taskContainer = document.createElement('div');
-              taskContainer.classList.add('task-container');
-            pageTab.appendChild(taskContainer)
-
-        mainContent.appendChild(pageTab);
-      }
-  });
-
-  // make a add page function
-  const addPageToArray = (page) => {
-    page = new pages(page);
-    myPages.push(page);
-    displayPages();
-  };
-
-  // make a function that pushes the new arrays
-  const createPage = (event) => {
-    const titleInput = 'Untitled';
-    addPageToArray(titleInput);
-  };
-
-  // make listen clicks for adding pages
-  const listenClicksPages = (() => {
-    document.addEventListener('click', (event) => {
-      const { target } = event;
-      if (target.id === 'addPage') {
-        createPage(event);
-      } else if (target.id === 'addTask') {
-        createTask(event);
-      }
-    });
-  })();
-
-};
-
-
 const pagesContainer = document.querySelector('.page-container');
 const addPageForm = document.querySelector('.add-page-form');
 const addPageInput = document.querySelector('.add-page-input');
@@ -311,43 +237,6 @@ const saveAndRender = () => {
 };
 
 render();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const a = () => {
-  addPageToArray("Quick Note");
-  addPageToArray("Reading List");
-  addPageToArray("Habit Tracker");
-  addPageToArray("Personal Home");
-};
-
 
 // automatic defaultOpen the sidebar
 document.getElementById("defaultOpen").click();
