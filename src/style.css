@@ -10,7 +10,7 @@ html, body {
 }
 
 /* For button hover cursor */
-button:hover {
+button:hover , li:hover {
   cursor: pointer;
 }
 
@@ -30,7 +30,7 @@ button:hover {
 }
 
 /* The navigation menu links */
-.dropdownSideMenu button {
+.dropdownSideMenu button, .dropdownSideMenu li {
    display: flex;
    justify-content: flex-start;
    padding: 5px 10px 10px 15px;
@@ -47,8 +47,9 @@ button:hover {
 }
 
 /* When you mouse over the navigation links, change their color */
-.dropdownSideMenu button:hover {
+.dropdownSideMenu button:hover, .dropdownSideMenu li:hover {
    background-color: rgb(210, 210, 210);
+   cursor: pointer;
 }
 
 /* Position and style the close button (top right corner) */
@@ -99,7 +100,9 @@ button:hover {
 
 /* For page container padding top */
 .page-container {
-  padding-top: 20px
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
 }
 /* For add a page button */
 .add-page-button {
@@ -116,4 +119,18 @@ button:hover {
 /* Style the tab content */
 .tabcontent {
  display: none;
+}
+
+
+.page-name {
+  font-size: 50px;
+}
+.add-page-form {
+
+}
+.add-page-input {
+
+}
+.active-page {
+  background-color: gray;
 }

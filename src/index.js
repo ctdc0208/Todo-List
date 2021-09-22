@@ -92,11 +92,15 @@ const makeSidebar = (() => {
     pageContainer.setAttribute('id', 'table-body');
   dropdownSideMenu.appendChild(pageContainer);
 
-  const addPage = document.createElement('button');
-    addPage.setAttribute('type', 'button');
-    addPage.setAttribute('id', 'addPage');
-    addPage.textContent = 'Add Page';
-  dropdownSideMenu.appendChild(addPage);
+  const addPageForm = document.createElement('form');
+    addPageForm.setAttribute('action', '""');
+    addPageForm.classList.add('add-page-form');
+      const addPageInput = document.createElement('input');
+        addPageInput.setAttribute('type', 'text');
+        addPageInput.setAttribute('placeholder', 'New Page Name');
+        addPageInput.classList.add('add-page-input');
+      addPageForm.appendChild(addPageInput);
+  dropdownSideMenu.appendChild(addPageForm);
 
   const mainContent = document.createElement('div');
     mainContent.setAttribute('id', "main");
@@ -172,76 +176,141 @@ function closeNav() {
 }
 
 
-// set myPages array
-let myPages = [];
-let myTask = [];
+const pagesss = () => {
+  // set myPages array
+  let myPages = [];
 
-// add class page
-class pages {
-  constructor (page) {
-    this.page = page;
-  }
-}
-
-// set arrays in element to display pages
-const displayPages = (() => {
-  const mainContent = document.querySelector('#main');
-    const pageList = document.querySelector('#table-body');
-    pageList.textContent = '';
-    for (let i = 0; i < myPages.length; i += 1) {
-      const pageColumn = document.createElement('button');
-        pageColumn.classList.add('page-column');
-        pageColumn.classList.add('tablinks');
-        pageColumn.addEventListener('click', function(){openTab(event, myPages[i].page)});
-        pageColumn.textContent = myPages[i].page;
-      pageList.appendChild(pageColumn);
-
-      const pageTab = document.createElement('div');
-        pageTab.classList.add('tabcontent');
-        pageTab.setAttribute('id', myPages[i].page);
-          const pageTabTitle = document.createElement('p');
-            pageTabTitle.classList.add('page-tab-title');
-            pageTabTitle.textContent = myPages[i].page;
-          pageTab.appendChild(pageTabTitle);
-
-          const addList = document.createElement('button');
-              addList.classList.add('add-list');
-              addList.textContent = 'Add';
-              addList.setAttribute('id', 'addTask');
-          pageTab.appendChild(addList);
-
-          const taskContainer = document.createElement('div');
-            taskContainer.classList.add('task-container');
-          pageTab.appendChild(taskContainer)
-
-      mainContent.appendChild(pageTab);
+  // add class page
+  class pages {
+    constructor (page) {
+      this.page = page;
     }
+  }
+
+  // set arrays in element to display pages
+  const displayPages = (() => {
+    const mainContent = document.querySelector('#main');
+      const pageList = document.querySelector('#table-body');
+      pageList.textContent = '';
+      for (let i = 0; i < myPages.length; i += 1) {
+        const pageColumn = document.createElement('li');
+          pageColumn.classList.add('page-column');
+          pageColumn.classList.add('tablinks');
+          pageColumn.addEventListener('click', function(){openTab(event, myPages[i].page)});
+          pageColumn.textContent = myPages[i].page;
+        pageList.appendChild(pageColumn);
+
+        const pageTab = document.createElement('div');
+          pageTab.classList.add('tabcontent');
+          pageTab.setAttribute('id', myPages[i].page);
+            const pageTabTitle = document.createElement('p');
+              pageTabTitle.classList.add('page-tab-title');
+              pageTabTitle.textContent = myPages[i].page;
+            pageTab.appendChild(pageTabTitle);
+
+            const addList = document.createElement('button');
+                addList.classList.add('add-list');
+                addList.textContent = 'Add';
+                addList.setAttribute('id', 'addTask');
+            pageTab.appendChild(addList);
+
+            const taskContainer = document.createElement('div');
+              taskContainer.classList.add('task-container');
+            pageTab.appendChild(taskContainer)
+
+        mainContent.appendChild(pageTab);
+      }
+  });
+
+  // make a add page function
+  const addPageToArray = (page) => {
+    page = new pages(page);
+    myPages.push(page);
+    displayPages();
+  };
+
+  // make a function that pushes the new arrays
+  const createPage = (event) => {
+    const titleInput = 'Untitled';
+    addPageToArray(titleInput);
+  };
+
+  // make listen clicks for adding pages
+  const listenClicksPages = (() => {
+    document.addEventListener('click', (event) => {
+      const { target } = event;
+      if (target.id === 'addPage') {
+        createPage(event);
+      } else if (target.id === 'addTask') {
+        createTask(event);
+      }
+    });
+  })();
+
+};
+
+
+const pagesContainer = document.querySelector('.page-container');
+const addPageForm = document.querySelector('.add-page-form');
+const addPageInput = document.querySelector('.add-page-input');
+
+const LOCAL_STORAGE_PAGE_KEY = 'task.pages';
+const LOCAL_STORAGE_SELECTED_PAGE_ID_KEY = 'task.selectedPageId';
+let pages = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PAGE_KEY)) || [];
+let selectedPageId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PAGE_ID_KEY);
+
+pagesContainer.addEventListener('click', e => {
+  if (e.target.tagName.toLowerCase() === 'pg') {
+    selectedPageId = e.target.dataset.pageId;
+    saveAndRender();
+  }
 });
 
-// make a add page function
-const addPageToArray = (page) => {
-  page = new pages(page);
-  myPages.push(page);
-  displayPages();
+const createPage = (name) => {
+  return { id: Date.now().toString(), name: name, tasks: [] };
 };
 
-// make a function that pushes the new arrays
-const createPage = (event) => {
-  const titleInput = 'Untitled';
-  addPageToArray(titleInput);
+addPageForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const pageName = addPageInput.value;
+  if (pageName == null || pageName === '') return
+  const page = createPage(pageName);
+  addPageInput.value = null;
+  pages.push(page);
+  saveAndRender();
+});
+
+const clearElement = (element) => {
+  while(element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
 };
 
-// make listen clicks for adding pages
-const listenClicksPages = (() => {
-  document.addEventListener('click', (event) => {
-    const { target } = event;
-    if (target.id === 'addPage') {
-      createPage(event);
-    } else if (target.id === 'addTask') {
-      createTask(event);
-    }
+const render = () => {
+  clearElement(pagesContainer);
+  pages.forEach(page => {
+    const pageElement = document.createElement('pg');
+    pageElement.dataset.pageId = page.id;
+    pageElement.classList.add("page-name");
+    pageElement.textContent = page.name;
+    if (page.id === selectedPageId) {
+      pageElement.classList.add('active-page');
+    };
+    pagesContainer.appendChild(pageElement);
   });
-})();
+};
+
+const save = () => {
+  localStorage.setItem(LOCAL_STORAGE_PAGE_KEY, JSON.stringify(pages));
+  localStorage.setItem(LOCAL_STORAGE_SELECTED_PAGE_ID_KEY, selectedPageId);
+};
+
+const saveAndRender = () => {
+  save();
+  render();
+};
+
+render();
 
 
 
@@ -267,10 +336,18 @@ const listenClicksPages = (() => {
 
 
 
-addPageToArray("Quick Note");
-addPageToArray("Reading List");
-addPageToArray("Habit Tracker");
-addPageToArray("Personal Home");
+
+
+
+
+
+const a = () => {
+  addPageToArray("Quick Note");
+  addPageToArray("Reading List");
+  addPageToArray("Habit Tracker");
+  addPageToArray("Personal Home");
+};
+
 
 // automatic defaultOpen the sidebar
 document.getElementById("defaultOpen").click();
