@@ -121,9 +121,13 @@ button:hover , li:hover {
  display: none;
 }
 
-
 .page-name {
   font-size: 50px;
+}
+.page-delete {
+  display: flex;
+  justify-content: space-between;
+  font-size: 40px;
 }
 .add-page-form {
 

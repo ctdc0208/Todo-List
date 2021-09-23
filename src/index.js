@@ -102,6 +102,11 @@ const makeSidebar = (() => {
       addPageForm.appendChild(addPageInput);
   dropdownSideMenu.appendChild(addPageForm);
 
+  const deletePage = document.createElement('div');
+    deletePage.classList.add('page-delete');
+    deletePage.textContent = "Delete";
+  dropdownSideMenu.appendChild(deletePage);
+
   const mainContent = document.createElement('div');
     mainContent.setAttribute('id', "main");
   mainContainer.appendChild(mainContent);
@@ -179,6 +184,7 @@ function closeNav() {
 const pagesContainer = document.querySelector('.page-container');
 const addPageForm = document.querySelector('.add-page-form');
 const addPageInput = document.querySelector('.add-page-input');
+const deletePageButton = document.querySelector('.page-delete');
 
 const LOCAL_STORAGE_PAGE_KEY = 'task.pages';
 const LOCAL_STORAGE_SELECTED_PAGE_ID_KEY = 'task.selectedPageId';
@@ -195,6 +201,12 @@ pagesContainer.addEventListener('click', e => {
 const createPage = (name) => {
   return { id: Date.now().toString(), name: name, tasks: [] };
 };
+
+deletePageButton.addEventListener('click', e => {
+  pages = pages.filter(page => page.id !== selectedPageId);
+  selectedPageId = null;
+  saveAndRender();
+});
 
 addPageForm.addEventListener('submit', e => {
   e.preventDefault();
