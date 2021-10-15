@@ -233,6 +233,14 @@ const pagesContainer = document.querySelector('.page-container');
 const addPageForm = document.querySelector('.add-page-form');
 const addPageInput = document.querySelector('.add-page-input');
 const deletePageButton = document.querySelector('.page-delete');
+const pageDisplayContainer = document.querySelector('.todo-list')
+const pageTitleElement = document.querySelector('.page-title');
+const pageCountElement = document.querySelector('.task-count');
+const tasksContainer = document.querySelector('.data-tasks');
+const newTaskForm = document.querySelector('.new-data-task-form');
+const newTaskInput = document.querySelector('.new-data-task-input');
+
+
 
 const LOCAL_STORAGE_PAGE_KEY = 'task.pages';
 const LOCAL_STORAGE_SELECTED_PAGE_ID_KEY = 'task.selectedPageId';
@@ -274,6 +282,19 @@ const clearElement = (element) => {
 
 const render = () => {
   clearElement(pagesContainer);
+  renderList();
+
+  const selectedPage = pages.find(page => page.id === selectedPageId);
+
+  if (selectedPageId == null){
+    pageDisplayContainer.style.display = "none";
+  } else {
+    pageDisplayContainer.style.display = "";
+    pageTitleElement.innerText = selectedPage.name;
+  }
+};
+
+const renderList = () => {
   pages.forEach(page => {
     const pageElement = document.createElement('pg');
     pageElement.dataset.pageId = page.id;
@@ -285,6 +306,7 @@ const render = () => {
     pagesContainer.appendChild(pageElement);
   });
 };
+
 
 const save = () => {
   localStorage.setItem(LOCAL_STORAGE_PAGE_KEY, JSON.stringify(pages));
