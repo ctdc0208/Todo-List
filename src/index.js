@@ -164,7 +164,55 @@ const mainContents = (() => {
 
   mainContent.appendChild(week);
 
+  const todoList = document.createElement('div');
+    todoList.classList.add('todo-list');
+
+    const todolistHeader = document.createElement('div');
+      todolistHeader.classList.add('todo-header');
+
+      const pageTitle = document.createElement('h2');
+        pageTitle.classList.add('page-title');
+
+      const taskCount = document.createElement('p');
+        taskCount.classList.add('task-count');
+
+          todoList.appendChild(pageTitle);
+          todoList.appendChild(taskCount);
+
+    todoList.appendChild(todolistHeader);
+
+    const todoListBody = document.createElement('div');
+      todoListBody.classList.add('todo-body');
+
+      const dataTasks = document.createElement('div');
+        dataTasks.classList.add('data-tasks');
+
+      const newTaskCreator = document.createElement('div');
+        newTaskCreator.classList.add('new-data-task-form');
+          const newTaskCreatorForm = document.createElement('form');
+            newTaskCreatorForm.setAttribute('action', "");
+              const newTaskCreatorFormInput = document.createElement('input');
+               newTaskCreatorFormInput.setAttribute('type', "text");
+               newTaskCreatorFormInput.setAttribute('placeholder', "new task name");
+               newTaskCreatorFormInput.setAttribute('aria-label', "new task name");
+               newTaskCreatorFormInput.classList.add('new-data-task-input');
+              const newTaskCreatorFormButton = document.createElement('button');
+                newTaskCreatorFormButton.classList.add('btn-create');
+                newTaskCreatorFormButton.setAttribute('aria-label', "create new task");
+                newTaskCreatorFormButton.textContent = "+";
+
+                  newTaskCreatorForm.appendChild(newTaskCreatorFormInput);
+                  newTaskCreatorForm.appendChild(newTaskCreatorFormButton);
+
+            newTaskCreator.appendChild(newTaskCreatorForm);
+      todoList.appendChild(newTaskCreator);
+
+    mainContent.appendChild(todoList)
+
+
 })();
+
+
 
 
 
