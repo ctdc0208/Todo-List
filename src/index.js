@@ -317,6 +317,17 @@ addPageForm.addEventListener('submit', e => {
   saveAndRender();
 });
 
+addTaskForm.addEventListener('submit', e => {
+  e.preventDefault()
+  const taskName = newTaskInput.value
+  if (taskName == null || taskName === '') return
+  const task = createTask(taskName)
+  newTaskInput.value = null
+  const selectedPage = lists.find(list => list.id === selectedPageId)
+  selectedPage.tasks.push(task)
+  saveAndRender()
+})
+
 const clearElement = (element) => {
   while(element.firstChild) {
     element.removeChild(element.firstChild);
