@@ -283,16 +283,16 @@ pagesContainer.addEventListener('click', e => {
 
 tasksContainer.addEventListener('click', e => {
   if (e.target.tagName.toLowerCase() === 'input') {
-    const selectedPage = lists.find(list => list.id === selectedPageId);
+    const selectedPage = pages.find(page => page.id === selectedPageId);
     const selectedTask = selectedPage.tasks.find(task => task.id === e.target.id);
     selectedTask.complete = e.target.checked;
     save()
-    renderTaskCount(selectedList)
+    renderTaskCount(selectedPage)
   };
 });
 
 clearCompleteTasksButton.addEventListener('click', e => {
-  const selectedPage = lists.find(list => list.id === selectedPageId);
+  const selectedPage = pages.find(page => page.id === selectedPageId);
   selectedPage.tasks = selectedPage.tasks.filter(task => !task.complete);
   saveAndRender()
 });
@@ -306,6 +306,10 @@ deletePageButton.addEventListener('click', e => {
 const createPage = (name) => {
   return { id: Date.now().toString(), name: name, tasks: [] };
 };
+
+function createTask(name) {
+  return { id: Date.now().toString(), name: name, complete: false }
+}
 
 addPageForm.addEventListener('submit', e => {
   e.preventDefault();
@@ -323,10 +327,68 @@ addTaskForm.addEventListener('submit', e => {
   if (taskName == null || taskName === '') return
   const task = createTask(taskName)
   newTaskInput.value = null
-  const selectedPage = lists.find(list => list.id === selectedPageId)
+  const selectedPage = pages.find(page => page.id === selectedPageId)
   selectedPage.tasks.push(task)
   saveAndRender()
 })
+
+const saveAndRender = () => {
+  save();
+  render();
+};
+
+const save = () => {
+  localStorage.setItem(LOCAL_STORAGE_PAGE_KEY, JSON.stringify(pages));
+  localStorage.setItem(LOCAL_STORAGE_SELECTED_PAGE_ID_KEY, selectedPageId);
+};
+
+function render() {
+  clearElement(pagesContainer)
+  renderPages()
+
+  const selectedPage = pages.find(page => page.id === selectedPageId)
+  if (selectedPageId == null) {
+    pageDisplayContainer.style.display = 'none'
+  } else {
+    pageDisplayContainer.style.display = ''
+    pageTitleElement.innerText = selectedPage.name
+    renderTaskCount(selectedPage)
+    clearElement(tasksContainer)
+    renderTasks(selectedPage)
+  }
+}
+
+function renderTasks(selectedPage) {
+  selectedPage.tasks.forEach(task => {
+    const taskElement = document.importNode(taskTemplate.content, true)
+    const checkbox = taskElement.querySelector('input')
+    checkbox.id = task.id
+    checkbox.checked = task.complete
+    const label = taskElement.querySelector('label')
+    label.htmlFor = task.id
+    label.append(task.name)
+    tasksContainer.appendChild(taskElement)
+  })
+}
+
+function renderTaskCount(selectedPage) {
+  const incompleteTaskCount = selectedPage.tasks.filter(task => !task.complete).length
+  const taskString = incompleteTaskCount === 1 ? "task" : "tasks"
+  pageCountElement.innerText = `${incompleteTaskCount} ${taskString} remaining`
+}
+
+function renderPages() {
+  pages.forEach(page => {
+    const pageElement = document.createElement('pg')
+    pageElement.dataset.pageId = page.id
+    pageElement.classList.add("list-name")
+    pageElement.innerText = page.name
+    if (page.id === selectedPageId) {
+      pageElement.classList.add('active-list')
+    }
+    pagesContainer.appendChild(pageElement)
+  })
+}
 
 const clearElement = (element) => {
   while(element.firstChild) {
@@ -334,37 +396,6 @@ const clearElement = (element) => {
   }
 };
 
-const render = () => {
-  clearElement(pagesContainer);
-  renderList();
-
-  const selectedPage = pages.find(page => page.id === selectedPageId);
-
-};
-
-const renderList = () => {
-  pages.forEach(page => {
-    const pageElement = document.createElement('pg');
-    pageElement.dataset.pageId = page.id;
-    pageElement.classList.add("page-name");
-    pageElement.textContent = page.name;
-    if (page.id === selectedPageId) {
-      pageElement.classList.add('active-page');
-    };
-    pagesContainer.appendChild(pageElement);
-  });
-};
-
-
-const save = () => {
-  localStorage.setItem(LOCAL_STORAGE_PAGE_KEY, JSON.stringify(pages));
-  localStorage.setItem(LOCAL_STORAGE_SELECTED_PAGE_ID_KEY, selectedPageId);
-};
-
-const saveAndRender = () => {
-  save();
-  render();
-};
 
 render();
 
