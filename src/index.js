@@ -216,7 +216,7 @@ const mainContents = (() => {
             deletePage.classList.add('button-delete-page');
 
   todoList.appendChild(deleteStuff);
-  
+
 mainContent.appendChild(todoList)
 
   const taskTemplate = document.createElement('template');
@@ -266,7 +266,7 @@ const pageCountElement = document.querySelector('.task-count');
 const tasksContainer = document.querySelector('.data-tasks');
 const newTaskForm = document.querySelector('.new-data-task-form');
 const newTaskInput = document.querySelector('.new-data-task-input');
-
+const clearCompletedTasksButton = document.querySelector('.button-delete-completed-task');
 
 
 const LOCAL_STORAGE_PAGE_KEY = 'task.pages';
@@ -283,23 +283,29 @@ pagesContainer.addEventListener('click', e => {
 
 tasksContainer.addEventListener('click', e => {
   if (e.target.tagName.toLowerCase() === 'input') {
-    const selectedList = lists.find(list => list.id === selectedListId)
-    const selectedTask = selectedList.tasks.find(task => task.id === e.target.id)
-    selectedTask.complete = e.target.checked
+    const selectedPage = lists.find(list => list.id === selectedPageId);
+    const selectedTask = selectedPage.tasks.find(task => task.id === e.target.id);
+    selectedTask.complete = e.target.checked;
     save()
     renderTaskCount(selectedList)
-  }
-})
+  };
+});
 
-const createPage = (name) => {
-  return { id: Date.now().toString(), name: name, tasks: [] };
-};
+clearCompleteTasksButton.addEventListener('click', e => {
+  const selectedPage = lists.find(list => list.id === selectedPageId);
+  selectedPage.tasks = selectedPage.tasks.filter(task => !task.complete);
+  saveAndRender()
+});
 
 deletePageButton.addEventListener('click', e => {
   pages = pages.filter(page => page.id !== selectedPageId);
   selectedPageId = null;
   saveAndRender();
 });
+
+const createPage = (name) => {
+  return { id: Date.now().toString(), name: name, tasks: [] };
+};
 
 addPageForm.addEventListener('submit', e => {
   e.preventDefault();
