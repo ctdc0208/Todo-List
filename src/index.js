@@ -205,11 +205,38 @@ const mainContents = (() => {
                   newTaskCreatorForm.appendChild(newTaskCreatorFormButton);
 
             newTaskCreator.appendChild(newTaskCreatorForm);
-      todoList.appendChild(newTaskCreator);
 
-    mainContent.appendChild(todoList)
+    todoList.appendChild(newTaskCreator);
 
+      const deleteStuff = document.createElement('div');
+        deleteStuff.classList.add('delete-stuff');
+          const deleteCompletedTask = document.createElement('button');
+            deleteCompletedTask.classList.add('button-delete-completed-task');
+          const deletePage = document.createElement('button');
+            deletePage.classList.add('button-delete-page');
 
+  todoList.appendChild(deleteStuff);
+  
+mainContent.appendChild(todoList)
+
+  const taskTemplate = document.createElement('template');
+    taskTemplate.setAttribute('id', 'task-template');
+
+    const tasksTemplateDiv = document.createElement('div');
+      tasksTemplateDiv.classList.add('task');
+
+      const taskTemplateInput = document.createElement('input');
+        taskTemplateInput.setAttribute('type', 'checkbox');
+      const taskTemplateLabel = document.createElement('label');
+        const taskTemplateSpan = document.createElement('span');
+          taskTemplateSpan.classList.add('custom-checkbox');
+      taskTemplateLabel.appendChild(taskTemplateSpan);
+
+    tasksTemplateDiv.appendChild(taskTemplateInput);
+    tasksTemplateDiv.appendChild(taskTemplateLabel);
+  taskTemplate.appendChild(tasksTemplateDiv);
+
+mainContent.appendChild(taskTemplate);
 })();
 
 
@@ -254,6 +281,16 @@ pagesContainer.addEventListener('click', e => {
   }
 });
 
+tasksContainer.addEventListener('click', e => {
+  if (e.target.tagName.toLowerCase() === 'input') {
+    const selectedList = lists.find(list => list.id === selectedListId)
+    const selectedTask = selectedList.tasks.find(task => task.id === e.target.id)
+    selectedTask.complete = e.target.checked
+    save()
+    renderTaskCount(selectedList)
+  }
+})
+
 const createPage = (name) => {
   return { id: Date.now().toString(), name: name, tasks: [] };
 };
@@ -286,12 +323,6 @@ const render = () => {
 
   const selectedPage = pages.find(page => page.id === selectedPageId);
 
-  if (selectedPageId == null){
-    pageDisplayContainer.style.display = "none";
-  } else {
-    pageDisplayContainer.style.display = "";
-    pageTitleElement.innerText = selectedPage.name;
-  }
 };
 
 const renderList = () => {
